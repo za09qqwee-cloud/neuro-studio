@@ -56,6 +56,34 @@ section{padding-block:44px}
 h2{font-size:clamp(26px,7vw,36px)}
 .card{padding:22px}
 }
+/* Portfolio */
+#work > h2{margin:10px 0 26px}
+.work-card{
+display:grid;
+grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+overflow:hidden;
+border:1px solid #44305e;
+border-radius:24px;
+background:linear-gradient(140deg,#1c112d,#111019 62%);
+transition:border-color .3s,box-shadow .3s;
+}
+.work-preview{display:grid;place-items:center;min-width:0;padding:clamp(14px,3vw,32px);background:radial-gradient(ellipse at center,#462270,#1b102a 80%)}
+.work-preview img{display:block;width:100%;height:auto;border:1px solid #624a7f;border-radius:12px;box-shadow:0 14px 28px #05030a80;transition:transform .35s ease}
+.work-details{align-self:center;padding:clamp(22px,4vw,44px);min-width:0}
+.work-badge{display:inline-block;margin:0;padding:5px 11px;border:1px solid #694794;border-radius:99px;background:#2c173e;color:#e3caff;font-size:12px}
+.work-details h3{margin:16px 0 4px;font-size:clamp(30px,5vw,56px);line-height:1;letter-spacing:-.045em}
+.work-category{margin:0;color:#d3afff;font-size:14px}
+.work-description{margin:14px 0 20px}
+.work-price{display:grid;gap:4px;line-height:1.4;font-size:13px}
+.work-price strong{color:#d3afff;font-size:25px}
+.work-link:focus-visible{outline:2px solid #dfb7ff;outline-offset:4px}
+@media(hover:hover){
+.work-card:hover{border-color:#a56aff;box-shadow:0 12px 36px #7939ee28}
+.work-card:hover .work-preview img{transform:scale(1.025)}
+}
+@media(max-width:720px){
+.work-card{grid-template-columns:1fr}
+}
 @media(prefers-reduced-motion:reduce){
 *{animation:none!important;scroll-behavior:auto;transition:none!important}
 }
@@ -97,6 +125,24 @@ h2{font-size:clamp(26px,7vw,36px)}
 </div>
 
 </div>
+</section>
+
+<section id="work" aria-labelledby="work-title">
+<p class="tag">ПОРТФОЛИО</p>
+<h2 id="work-title">Наши работы</h2>
+<article class="work-card" aria-labelledby="void-wear-title">
+<div class="work-preview">
+<img src="void-wear-preview.jpg" alt="Главная страница VOID WEAR с коллекцией Concrete Season" width="894" height="850" loading="lazy" decoding="async">
+</div>
+<div class="work-details">
+<p class="work-badge">Демонстрационный проект</p>
+<h3 id="void-wear-title">VOID WEAR</h3>
+<p class="work-category">Интернет-магазин одежды</p>
+<p class="work-description">Современный каталог одежды с фильтрами, корзиной, анимациями и адаптивным дизайном.</p>
+<p class="work-price">Стоимость аналогичной разработки <strong>от 10 000 ₽</strong></p>
+<a class="btn work-link" href="https://void-wear-mauve.vercel.app/">Посмотреть проект <span aria-hidden="true">↗</span></a>
+</div>
+</article>
 </section>
 
 <section id="prices">
