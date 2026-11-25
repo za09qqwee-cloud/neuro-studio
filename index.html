@@ -16,13 +16,13 @@ a{color:inherit;text-decoration:none}
 .orb{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,#dfb7ff,#7733ee,#18082f);box-shadow:0 0 80px #7928ff88;animation:float 4s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-20px) rotate(20deg)}}
 h1{font-size:clamp(40px,8vw,90px);letter-spacing:-2px;margin:30px 0 15px}
-.gradient{background:linear-gradient(90deg,#fff,#ac72ff);background-clip:text;color:transparent}
+.gradient{background:linear-gradient(90deg,#fff,#ac72ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 p{color:#aaa5ba;line-height:1.7}
 .btn{display:inline-block;background:#7939ee;color:white;padding:17px 28px;border-radius:14px;font-weight:bold;margin-top:20px;border:0;cursor:pointer;font-size:16px;transition:.3s}
 .btn:hover{background:#9458ff;box-shadow:0 0 25px #7939ee66}
 section{padding:65px 6%;max-width:1200px;margin:auto}
 h2{font-size:36px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:18px}
 .card{background:#111019;border:1px solid #302440;border-radius:24px;padding:28px;transition:.3s}
 .card:hover{transform:translateY(-6px);border-color:#a56aff}
 .price{font-size:32px;font-weight:bold;color:#bd91ff}
@@ -46,6 +46,16 @@ textarea{resize:vertical}
 form .btn{width:100%}
 button:disabled{opacity:.5;cursor:wait}
 #status{text-align:center;color:#bd91ff}
+@media(max-width:600px){
+nav{padding-block:16px}
+nav a{display:flex;align-items:center;min-height:44px}
+.hero{min-height:75vh;min-height:75svh;padding:32px 6%}
+.orb{width:120px;height:120px}
+h1{font-size:clamp(32px,8vw,48px);overflow-wrap:anywhere}
+section{padding-block:44px}
+h2{font-size:clamp(26px,7vw,36px)}
+.card{padding:22px}
+}
 @media(prefers-reduced-motion:reduce){
 *{animation:none!important;scroll-behavior:auto;transition:none!important}
 }
@@ -134,7 +144,7 @@ button:disabled{opacity:.5;cursor:wait}
 <label for="name">Ваше имя</label>
 <input id="name" name="name"
 placeholder="Как к вам обращаться?"
-maxlength="100" required>
+autocomplete="name" maxlength="100" required>
 
 <label for="contact">Ваш контакт</label>
 <input id="contact" name="contact"
@@ -153,6 +163,11 @@ maxlength="200" required>
 <textarea id="message" name="message"
 rows="5" maxlength="1000"
 placeholder="Какой сайт вам нужен?"></textarea>
+
+<div hidden>
+<label for="website">Сайт</label>
+<input id="website" name="website" tabindex="-1" autocomplete="off">
+</div>
 
 <button class="btn" type="submit">
 Отправить заявку
@@ -179,6 +194,7 @@ const button = form.querySelector('button');
 form.addEventListener('submit', async function(e){
 
 e.preventDefault();
+if (button.disabled) return;
 
 button.disabled = true;
 button.textContent = 'Отправляем...';
@@ -195,6 +211,12 @@ headers:{
 },
 body:JSON.stringify(data)
 });
+
+if (response.status === 429) {
+  statusText.style.color = '#ff7777';
+  statusText.textContent = 'Слишком много заявок. Попробуйте отправить заявку позже.';
+  return;
+}
 
 const result = await response.json();
 
